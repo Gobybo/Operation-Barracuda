@@ -4,13 +4,15 @@ Class genre
 	//ATTRIBUTS PRIVES-------------------------------------------------------------------------
 	private $id‪Genre; 
 	private $libelleGenre; 
+	private $cheminImageGenre;
 	
 	
 	//CONSTRUCTEUR-----------------------------------------------------------------------------
-	public function __construct($unId‪Genre, $unLibelleGenre)
+	public function __construct($unId‪Genre, $unLibelleGenre, $unCheminImageGenre)
 		{
 		$this->id‪Genre = $unId‪Genre;
 		$this->libelleGenre = $unLibelleGenre;
+		$this->cheminImageGenre = $unCheminImageGenre;
 		}
 	
 	//ACCESSEURS-------------------------------------------------------------------------------
@@ -23,6 +25,11 @@ Class genre
 		{
 		return $this->libelleGenre;
 		}
+
+	public function getCheminImageGenre()
+	{
+		return $this->cheminImageGenre;
+	}
 	
 	//SETTEUR------------------------------------------------------------
 	
@@ -34,6 +41,10 @@ Class genre
 		{
 		$this->libelleGenre = $unLibelleGenre;
 		}
+	public function setCheminImageGenre($unCheminImageGenre)
+	{
+		$this->cheminImageGenre = $unCheminImageGenre;
+	}
 	
 	}
 	

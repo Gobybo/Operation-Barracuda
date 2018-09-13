@@ -20,8 +20,8 @@ class accesBD
 		// ORDI PROFSIO
 		$this->hote="172.16.0.50";
 		$this->port="";
-		$this->login="ALT18MOREAU";
-		$this->passwd="Benj1008";
+		$this->login="ALT18HERVOUET";
+		$this->passwd="eHervouet1996*";
 		$this->base="videoppe3moreau";
 		
 		// ORDI DEV2

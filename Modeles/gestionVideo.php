@@ -69,7 +69,7 @@ Class gestionVideo
 	
 		while ($nb<sizeof($resultat))
 			{
-				$this->tousLesGenres->ajouteUnGenre($resultat[$nb][0],$resultat[$nb][1]);
+				$this->tousLesGenres->ajouteUnGenre($resultat[$nb][0],$resultat[$nb][1], $resultat[$nb][2]);
 				
 			$nb++;
 			}

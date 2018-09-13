@@ -29,17 +29,16 @@ Class conteneurGenre
 	//METHODE RETOURNANT LA LISTE DES Genres-----------------------------------------------------------------------------------------
 	public function listeDesGenres()
 		{
-		$liste = "<div class='container h-100'>
-                    <div class='row h-100 justify-content-center align-items-center'>
-                        <table class='table w-50'>
-                            <thead>
-                                <td class='head-table-genre text-white'>Genre</td>
-                            </thead>
-                            <tbody>";
+		$liste = "<div class='container'>
+					<section class='row'>";
+
 		foreach ($this->lesGenres as $unGenre)
-			{	$liste = $liste.'<tr><td class="image-icon"><img src="'.$unGenre->getCheminImageGenre().'" style="width : 75px; length : 75px;></td><td class="text-white td-table">'.$unGenre->getLibelleGenre().'</td></tr>';
+			{	
+				$liste = $liste.'<div class="col-xs-4 col-sm-4 col-md-4"><a href="Vues/voirSupport.php?idGenre='.$unGenre->getIdGenre().'"><img src="'.$unGenre->getCheminImageGenre().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;"></a><figcaption class="figure-caption text-center"><a href="Vues/voirSupport.php?idGenre='.$unGenre->getIdGenre().'">'.$unGenre->getLibelleGenre().'</a></figcaption></div>';
+
+				//$liste = $liste.'<tr><td class="col-xs-4 col-sm-3 col-md-2"><img src="'.$unGenre->getCheminImageGenre().'" style="width : 75px; length : 75px;></td><td class="text-white td-table">'.$unGenre->getLibelleGenre().'</td></tr>';
 			}
-			$liste=$liste."</tbody></table></div></div>";
+			$liste=$liste."</section></div>";
 		return $liste;
 		}
 		

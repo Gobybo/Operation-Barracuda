@@ -189,6 +189,7 @@ class Controleur
 					}
 				else
 					{
+					require 'Vues/menu.php';
 					$_SESSION['LesRessources'] = $this->maVideotheque->listeLesSupports($_GET['idGenre']);
 					require 'Vues/voirRessources.php';
 					}

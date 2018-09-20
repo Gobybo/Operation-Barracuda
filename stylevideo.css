@@ -1,0 +1,67 @@
+﻿.spec-bot
+{
+    margin-bottom: 1rem !important;
+}
+
+body
+{
+   margin-top: -24px !important;
+   background-color: #000000 !important;
+}
+ 
+.avatar
+{
+    width: 30px;
+    height: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: -5px;
+    border-radius: 50%;
+}
+ 
+.btn-avatar
+{
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+  
+.pos-avatar
+{
+    width: 50px;
+    margin-right: 60px !important;
+    margin-bottom: 17px !important;
+}
+
+.dropdown
+{
+    padding-left: 0 !important;
+    padding-right: 40px !important;
+}
+
+.head-table-connexion
+{
+    text-align: center;
+    border-top: none !important;
+}
+
+.head-table-genre
+{
+    text-align: center;
+    border-top: none !important;
+}
+
+.td-table
+{
+    text-align: center;
+}
+
+.text-red
+{
+    color: red;
+}
+
+.text-small
+{
+    font-size: 12px;
+}

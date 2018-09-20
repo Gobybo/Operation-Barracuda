@@ -14,4 +14,3 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar3">
             <span class="navbar-toggler-icon"></span>
         </button>
-    

@@ -21,7 +21,7 @@ class accesBD
 		$this->hote="172.16.0.50";
 		$this->port="";
 		$this->login="ALT18HERVOUET";
-		$this->passwd="eHervouet1996*";
+		$this->passwd="eHervouet96";
 		$this->base="videoppe3moreau";
 		
 		// ORDI DEV2

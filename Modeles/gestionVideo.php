@@ -83,7 +83,7 @@ Class gestionVideo
 		while ($nb<sizeof($resultat))
 			{
 				$leGenre = $this->tousLesGenres->donneObjetGenreDepuisNumero($resultat[$nb][4]);
-				$this->tousLesSupports->ajouteUnSupport($resultat[$nb][0],$resultat[$nb][1],$resultat[$nb][2],$resultat[$nb][3],$leGenre);
+				$this->tousLesSupports->ajouteUnSupport($resultat[$nb][0],$resultat[$nb][1],$resultat[$nb][2],$resultat[$nb][3],$leGenre, $resultat[$nb][4]);
 				
 			$nb++;
 			}

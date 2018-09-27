@@ -6,7 +6,8 @@ Class support
 	private $titreSupport; 
 	private $realisateurSupport; 
 	private $imageSupport;
-	private $leGenreDeSupport; 
+	private $leGenreDeSupport;
+	private $lienTelechargementSupport;
 		
 	//CONSTRUCTEUR-----------------------------------------------------------------------------
 	public function __construct($unIdSupport, $unTitreSupport, $unRealisateurSupport, $uneImageSupport, $leGenreSupport)
@@ -35,11 +36,15 @@ Class support
 		}
 	public function getImageSupport()
 		{
-		return 'Images/'.$this->imageSupport;
+		return $this->imageSupport;
 		}
 	public function getLeGenreDeSupport()
 		{
 		return $this->leGenreDeSupport;
+		}
+	public function getLeLienTelechargementSupport()
+		{
+		return $this->lienTelechargementSupport;
 		}
 	
 	

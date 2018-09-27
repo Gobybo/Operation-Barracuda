@@ -145,9 +145,9 @@ class Controleur
 			//CAS visualisation de tous les films-------------------------------------------------------------------------------------------------
 			case "visualiser" :
 				//ici il faut pouvoir visualiser l'ensemble des films 
-				require 'Vues/construction.php';
+				require 'Vues/menu.php';
+				echo $this->maVideotheque->ListeLesFilms();
 				break;
-				
 			}
 		}	
 
@@ -163,7 +163,8 @@ class Controleur
 			//CAS visualisation de toutes les Series-------------------------------------------------------------------------------------------------
 			case "visualiser" :
 				//ici il faut pouvoir visualiser l'ensemble des Séries 
-				require 'Vues/construction.php';
+				require 'Vues/menu.php';
+				echo $this->maVideotheque->ListeLesSeries();
 				break;
 				
 			}

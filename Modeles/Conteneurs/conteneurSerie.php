@@ -31,8 +31,14 @@ Class conteneurSerie
 		{
 		$liste = '';
 		foreach ($this->lesSeries as $uneSerie)
-			{	$leGenre=$uneSerie->getLeGenreDeLaSerie();
-				$liste = $liste.'Serie N° : "'.$uneSerie->getIdSerie().' - '.$uneSerie->getTitreSerie().' - '.$uneSerie->getRealisateurSerie().' - '.$uneSerie->getUneImageDeLaSerie().' - '.$leGenre.' - '.$uneSerie->getResumeSerie().'><br>';
+			{	
+				$liste = $liste.'<div class="card" style="width: 18rem; margin-bottom : 10px;">
+								  <img class="card-img-top" src="Images/'.$uneSerie->getUneImageDeLaSerie().'" style="width : 200px; length : 200px;">
+								  <div class="card-body">
+									<p class="card-text"><a style="text-decoration : underline;">'.$uneSerie->getTitreSerie().'</a><br/>'.$uneSerie->getRealisateurSerie().'<br/><br/>'.$uneSerie->getResumeSerie().'</p>
+								  </div>
+								</div>';
+				//$liste = $liste.'<img src="Images/'.$uneSerie->getUneImageDeLaSerie().'" style="width : 200px; length : 200px;"><a style="color : white;">'.$uneSerie->getTitreSerie().' - '.$uneSerie->getRealisateurSerie().' - '.$leGenre=$uneSerie->getLeGenreDeLaSerie().' - '.$uneSerie->getResumeSerie().'</a><br>';
 			}
 		return $liste;
 		}

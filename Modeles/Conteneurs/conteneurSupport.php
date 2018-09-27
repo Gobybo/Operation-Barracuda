@@ -13,9 +13,9 @@ Class conteneurSupport
 		}
 	
 	//METHODE AJOUTANT UN Support------------------------------------------------------------------------------
-	public function ajouteUnSupport($unIdSupport, $unTitreSupport, $unRealisateurSupport, $uneImageSupport, $leGenreSupport)
+	public function ajouteUnSupport($unIdSupport, $unTitreSupport, $unRealisateurSupport, $uneImageSupport, $leGenreSupport, $unLienTelechargementSupport)
 		{
-		$unSupport = new support($unIdSupport, $unTitreSupport, $unRealisateurSupport, $uneImageSupport, $leGenreSupport);
+		$unSupport = new support($unIdSupport, $unTitreSupport, $unRealisateurSupport, $uneImageSupport, $leGenreSupport, $unLienTelechargementSupport);
 		$this->lesSupports->append($unSupport);
 			
 		}
@@ -83,8 +83,31 @@ Class conteneurSupport
 			if($unSupport->getLeGenreDeSupport()->getIdGenre() == $idGenre)
 			{
 				$liste = $liste.'
-				<div class="col-xs-4 col-sm-4 col-md-4"><img src="'.$unSupport->getImageSupport().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;">
-				<figcaption class="figure-caption text-center">'.$unSupport->getTitreSupport().'</a></figcaption></div>';
+				<div class="col-xs-4 col-sm-4 col-md-4"><img src="Images/'.$unSupport->getImageSupport().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;">
+				<figcaption class="figure-caption text-center">'.$unSupport->getTitreSupport().'</a>
+				<br/>
+				<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalLong'.$unSupport->getIdSupport().'">Commander</button>
+				</figcaption>
+				<div class="modal fade" id="exampleModalLong'.$unSupport->getIdSupport().'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Votre commande</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<img src="Images/'.$unSupport->getImageSupport().'" style="width : 200px; length : 200px; float : left;" />
+							<a style="text-decoration : underline;">'.$unSupport->getTitreSupport().'</a><br/><a style="font-size : smaller;">'.$unSupport->getRealisateurSupport().'</a>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+								<button type="button" class="btn btn-primary"><a style="color : white;" href="Supports/Support1.zip">Valider la commande</a></button>
+							</div>
+						</div>
+					</div>
+				</div><br/></div>';
 			}
 		}
 		$liste=$liste."</section></div>";

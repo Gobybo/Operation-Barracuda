@@ -31,8 +31,8 @@ Class conteneurFilm
 		{
 		$liste = '';
 		foreach ($this->lesFilms as $unFilm)
-			{	$leGenre=$unFilm->getLeGenreDuFilm();
-			    $liste = $liste.'Film N° : "'.$unFilm->getIdFilm().' -> Film : '.$unFilm->getTitreFilm().' - '.$leGenre.' - '.$unFilm->getDureeFilm().'><br>';
+			{	
+			    $liste = $liste.'<a style="color : white;">'.$unFilm->getTitreFilm().' - '.$unFilm->getLeGenreDuFilm().' - '.$unFilm->getDureeFilm().'</a><br>';
 			}
 		return $liste;
 		}

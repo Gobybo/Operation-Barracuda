@@ -12,6 +12,10 @@ Class conteneurSaison
 		$this->lesSaisons = new arrayObject();
 		}
 	
+	public function getLesSaisons()
+	{
+		return $this->lesSaisons;
+	}
 	//METHODE AJOUTANT UNE SAISON------------------------------------------------------------------------------
 	public function ajouteUneSaison($unIdSaison,$uneAnneeSaison, $unNbrEpisodeSaison, $laSerie)
 		{
@@ -77,7 +81,6 @@ Class conteneurSaison
 			}
 		return $laBonneSaison;
 		}		
-	
 	}
 	
 ?> 

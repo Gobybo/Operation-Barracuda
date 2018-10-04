@@ -75,7 +75,7 @@ Class conteneurSerie
 			}
 		return $laBonneSerie;
 		}	
-	
+
 	}
 	
 ?> 

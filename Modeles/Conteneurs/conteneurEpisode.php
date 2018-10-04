@@ -11,13 +11,17 @@ Class conteneurEpisode
 		{
 		$this->lesEpisodes = new arrayObject();
 		}
-	
+		
+	//Getteur
+	public function getLesEpisodes()
+	{
+		return $this->lesEpisodes;
+	}
 	//METHODE AJOUTANT UN episode------------------------------------------------------------------------------
 	public function ajouteUnEpisode($unIdEpisode,$unTitreEpisode,$uneDureeEpisode, $laSaison)
 		{
 		$unEpisode = new episode($unIdEpisode,$unTitreEpisode,$uneDureeEpisode, $laSaison);
 		$this->lesEpisodes->append($unEpisode);
-			
 		}
 		
 	//METHODE RETOURNANT LE NOMBRE d'épisodes-------------------------------------------------------------------------------
@@ -47,7 +51,7 @@ Class conteneurEpisode
 		$liste = $liste."</SELECT>";
 		return $liste;
 		}		
-	
+
 	}
 	
 ?> 

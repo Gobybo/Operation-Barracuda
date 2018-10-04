@@ -68,7 +68,7 @@ class Controleur
 				$this->vueSerie($action);
 				break;
 			case 'Videotheque':
-				$this->vueRessource($action);
+				$this->vueVideotheque($action);
 				break;
 			case "accueil":
 				session_destroy();
@@ -189,9 +189,15 @@ class Controleur
 					}
 				else
 					{
-					$_SESSION['lesRessources'] = $this->maMairie->listeLesRessources();
-					require 'Vues/voirRessource.php';
+					require 'Vues/menu.php';
+					$_SESSION['LesRessources'] = $this->maVideotheque->listeLesSupports($_GET['idGenre']);
+					require 'Vues/voirRessources.php';
 					}
+				break;
+				
+			case "voirDetail":
+				$_SESSION['LesEpisodes'] = $this->maVideotheque->affichageChiant(2);
+				require 'Vues/voirDetail.php';
 				break;
 				
 			//CAS enregistrement d'une ressource dans la base------------------------------------------------------------------------------

@@ -72,8 +72,30 @@ Class conteneurSupport
 			}
 			return $leBonSupport;
 		}
-	
+		
+	public function donneListeSUpportDepuisIdGenre($idGenre)
+		{
+		$liste = "<div class='container'>
+					<section class='row'>";
+		
+		foreach($this->lesSupports as $unSupport)
+		{
+			if($unSupport->getLeGenreDeSupport()->getIdGenre() == $idGenre)
+			{
+				$liste = $liste.'
+				<div class="col-xs-4 col-sm-4 col-md-4">
+				<a href="index.php?login='.$_GET['login'].'&vue=Videotheque&action=voirDetail">
+				<img src="'.$unSupport->getImageSupport().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;">
+				<figcaption class="figure-caption text-center">'.$unSupport->getTitreSupport().'</a></figcaption></div>';
+			}
+		}
+		$liste=$liste."</section></div>";
+		return $liste;
+		}
 	
 	}
+	
+	
+	
 	
 ?> 

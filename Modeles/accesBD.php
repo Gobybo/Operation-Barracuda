@@ -20,8 +20,8 @@ class accesBD
 		// ORDI PROFSIO
 		$this->hote="172.16.0.50";
 		$this->port="";
-		$this->login="ALT18MOREAU";
-		$this->passwd="Benj1008";
+		$this->login="ALT18HERVOUET";
+		$this->passwd="eHervouet96";
 		$this->base="videoppe3moreau";
 		
 		// ORDI DEV2
@@ -76,15 +76,13 @@ class accesBD
 			while($row = $query->fetch(PDO::FETCH_NUM))
 			{
 				$lesInfos[$nbTuples] = $row;
-				$nbTuples++;
-				
+				$nbTuples++;				
 			}
 		}
 		else
 		{
 			die('Problème dans chargement : '.$query->errorCode());
 		}
-
 		//retour du tableau à deux dimension
 		return $lesInfos;
 	}

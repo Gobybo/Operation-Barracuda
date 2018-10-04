@@ -15,7 +15,7 @@ Class episode
 		$this->dureeEpisode = $uneDureeEpisode;
 		$this->laSaison = $laSaison;
 		}
-	
+		
 	//ACCESSEURS-------------------------------------------------------------------------------
 	public function getIdEpisode()
 		{

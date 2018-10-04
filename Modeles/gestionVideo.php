@@ -69,7 +69,7 @@ Class gestionVideo
 	
 		while ($nb<sizeof($resultat))
 			{
-				$this->tousLesGenres->ajouteUnGenre($resultat[$nb][0],$resultat[$nb][1]);
+				$this->tousLesGenres->ajouteUnGenre($resultat[$nb][0],$resultat[$nb][1], $resultat[$nb][2]);
 				
 			$nb++;
 			}
@@ -251,7 +251,35 @@ Class gestionVideo
 		{
 		return $this->tousLesClients->nbClients();
 		}
-
+	//METHO CHELOU
+	public function affichageChiant($idSerie)
+	{
+		$detail = "";
+		foreach($this->tousLesEpisodes->getLesEpisodes() as $unEpisode)
+		{
+			if($unEpisode->getLaSaisonEpisode()->getLaSerie()->getIdSerie() == $idSerie)
+			{	
+				echo $unEpisode->getLaSaisonEpisode()->getLaSerie()->getTitreSerie()."\n";			
+				foreach($this->toutesLesSaisons->getLesSaisons() as $uneSaison)
+				{
+					if($uneSaison->getIdSaison() == $unEpisode->getLaSaisonEpisode()->getIdSaison())
+					{
+						echo "saison n°".$uneSaison->getIdSaison()."\n";
+						foreach($this->tousLesEpisodes->getLesEpisodes() as $lEpisode)
+						{						
+							if($lEpisode->getLaSaisonEpisode() == $uneSaison)
+							{
+								echo 
+								echo "Episode n°".$lEpisode->getIdEpisode()." : ".$lEpisode->getTitreEpisode()."<BR>";
+							}
+						}
+					}
+				}
+			}
+		}
+		return $detail;
+	}
+	
 	//METHODE RETOURNANT LE NOMBRE DE FIlMS----------------------------------------------------------------------------------------------
 	public function donneNbFilms()
 		{
@@ -305,7 +333,11 @@ Class gestionVideo
 	public function listeLesEpisodes()
 		{
 		return $this->tousLesEpisodes->listeDesEpisodes();
-		}		
+		}
+	public function listeLesSupports($idGenre)
+		{
+		return $this->tousLesSupports->donneListeSUpportDepuisIdGenre($idGenre);
+		}
 			
 	//METHODE RETOURNANT LA LISTE DES DIFFERENTS ELEMENTS DANS DES BALISES <SELECT>-----------------------------------------------------------------
 	public function lesClientsAuFormatHTML()
@@ -336,8 +368,23 @@ Class gestionVideo
 		{
 		return $this->tousLesEpisodes->lesEpisodesAuFormatHTML();
 		}		
-
-		
-	}
+}
 	
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

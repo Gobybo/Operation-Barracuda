@@ -196,7 +196,8 @@ class Controleur
 				break;
 				
 			case "voirDetail":
-				$_SESSION['LesEpisodes'] = $this->maVideotheque->affichageChiant(2);
+				$_SESSION['detailSerie'] = $this->maVideotheque->affichageDetailSerie(2);
+				$_SESSION['LesEpisodes'] = $this->maVideotheque->affichageEpisodeParSaisonEtSerie(2);
 				require 'Vues/voirDetail.php';
 				break;
 				

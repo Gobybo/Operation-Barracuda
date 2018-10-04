@@ -34,12 +34,18 @@ Class conteneurGenre
 
 		foreach ($this->lesGenres as $unGenre)
 			{	
-				$liste = $liste.'<div class="col-xs-4 col-sm-4 col-md-4">
-				<a href="index.php?login='.$_GET['login'].'&vue=Videotheque&action=choixGenre&idGenre='.$unGenre->getIdGenre().'">
-				<img src="'.$unGenre->getCheminImageGenre().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;"></a>
-				<figcaption class="figure-caption text-center">
-				<a href="index.php?login='.$_GET['login'].'&vue=Videotheque&action=choixGenre&idGenre='.$unGenre->getIdGenre().'">
-				'.$unGenre->getLibelleGenre().'</a></figcaption></div>';
+				$liste = $liste.'
+				<div class="col-xs-4 col-sm-4 col-md-4">
+					<a href="index.php?login='.$_GET['login'].'&vue=Videotheque&action=choixGenre&idGenre='.$unGenre->getIdGenre().'">
+						<img src="'.$unGenre->getCheminImageGenre().'" class="rounded mx-auto d-block" style="width : 200px; length : 200px;">
+					</a>
+					<figcaption class="figure-caption text-center">
+						<a href="index.php?login='.$_GET['login'].'&vue=Videotheque&action=choixGenre&idGenre='.
+							$unGenre->getIdGenre().'">'.$unGenre->getLibelleGenre().
+						'</a>
+					</figcaption>
+				</div>
+				';
 
 				//$liste = $liste.'<tr><td class="col-xs-4 col-sm-3 col-md-2"><img src="'.$unGenre->getCheminImageGenre().'" style="width : 75px; length : 75px;></td><td class="text-white td-table">'.$unGenre->getLibelleGenre().'</td></tr>';
 			}

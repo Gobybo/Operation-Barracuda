@@ -35,7 +35,7 @@ Class support
 		}
 	public function getImageSupport()
 		{
-		return 'Images/'.$this->imageSupport;
+		return $this->imageSupport;
 		}
 	public function getLeGenreDeSupport()
 		{

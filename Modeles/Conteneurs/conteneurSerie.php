@@ -19,7 +19,12 @@ Class conteneurSerie
 		$this->lesSeries->append($uneSerie);
 			
 		}
-		
+	
+	public function getLesSeries()
+	{
+		return $this->lesSeries;
+	}
+
 	//METHODE RETOURNANT LE NOMBRE de series-------------------------------------------------------------------------------
 	public function nbSeries()
 		{

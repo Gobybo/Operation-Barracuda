@@ -251,26 +251,34 @@ Class gestionVideo
 		{
 		return $this->tousLesClients->nbClients();
 		}
-	//METHO CHELOU
-	public function affichageChiant($idSerie)
+		
+	public function affichageDetailSerie($idSerie)
+	{
+		echo '<div class="col-xs-4 col-sm-4 col-md-4">';
+		echo "<img src=".$this->toutesLesSeries->donneObjetSerieDepuisNumeroSerie($idSerie)->getUneImageDeLaSerie()." class='rounded mx-auto d-block' style='width : 200px; length : 200px;'>"."<BR>";
+		echo ''.$this->toutesLesSeries->donneObjetSerieDepuisNumeroSerie($idSerie)->getTitreSerie()."<BR>";
+		echo 'Réalisateurs :'.$this->toutesLesSeries->donneObjetSerieDepuisNumeroSerie($idSerie)->getRealisateurSerie()."<BR>";
+		echo 'Résumé :'.$this->toutesLesSeries->donneObjetSerieDepuisNumeroSerie($idSerie)->getResumeSerie()."<BR>";
+		echo '<div/>';
+	}
+	//METHODE D'AFFICHAGE DES EPISODES PAR SERIE ET PAR SERIE
+	public function affichageEpisodeParSaisonEtSerie($idSerie)
 	{
 		$detail = "";
-		foreach($this->tousLesEpisodes->getLesEpisodes() as $unEpisode)
+		foreach($this->toutesLesSeries->getLesSeries() as $uneSerie)
 		{
-			if($unEpisode->getLaSaisonEpisode()->getLaSerie()->getIdSerie() == $idSerie)
-			{	
-				echo $unEpisode->getLaSaisonEpisode()->getLaSerie()->getTitreSerie()."\n";			
+			if($uneSerie->getIdSerie() == $idSerie)
+			{				
 				foreach($this->toutesLesSaisons->getLesSaisons() as $uneSaison)
 				{
-					if($uneSaison->getIdSaison() == $unEpisode->getLaSaisonEpisode()->getIdSaison())
+					if($uneSaison->getLaSerie()->getIdSerie() == $idSerie)
 					{
-						echo "saison n°".$uneSaison->getIdSaison()."\n";
-						foreach($this->tousLesEpisodes->getLesEpisodes() as $lEpisode)
+						$detail = $detail."saison n°".$uneSaison->getIdSaison()."<BR>";						
+						foreach($this->tousLesEpisodes->getLesEpisodes() as $unEpisode)
 						{						
-							if($lEpisode->getLaSaisonEpisode() == $uneSaison)
+							if($unEpisode->getLaSaisonEpisode() == $uneSaison)
 							{
-								echo 
-								echo "Episode n°".$lEpisode->getIdEpisode()." : ".$lEpisode->getTitreEpisode()."<BR>";
+								$detail = $detail."Episode n°".$unEpisode->getIdEpisode()." : ".$unEpisode->getTitreEpisode()."<BR>";
 							}
 						}
 					}

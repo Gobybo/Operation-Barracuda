@@ -31,20 +31,17 @@ Class serie extends support
 	}
 	public function getUneImageDeLaSerie()
 	{
-		return parent::getImageSupport();
-	}	
-		
+		return 'Images/'.parent::getImageSupport();
+	}		
 	public function getLeGenreDeLaSerie()
 	{
 		return parent::getLeGenreDeSupport()->getLibelleGenre();
 	}				
-	//SETTEUR------------------------------------------------------------
-	
+	//SETTEUR------------------------------------------------------------	
 	public function setResumeSerie($unResumeSerie)
 	{
 		$this->resumeSerie = $unResumeSerie;
 	}
-	
 	
 	}
 	

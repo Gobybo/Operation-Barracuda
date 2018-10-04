@@ -10,10 +10,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<head>
-	<body>        
+	<body>
         <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center">
-        <a href="/" class="navbar-brand"><img src="Images/logo.jpg" alt="Videotheque"><br/><span class="text-red text-small">Vos vidéos<br/>en un clic</span></a>
+        <a href="/PPE3" class="navbar-brand"><img width="500px" src="Images/logo.png" alt="Videotheque"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar3">
             <span class="navbar-toggler-icon"></span>
         </button>
-    

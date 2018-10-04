@@ -11,7 +11,7 @@ class accesBD
 	private $base;
 	private $conn;
 	private $port;
-	
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//--------------------------CONSTRUCTEUR------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ class accesBD
 		// ORDI PROFSIO
 		$this->hote="172.16.0.50";
 		$this->port="";
-		$this->login="ALT18MOREAU";
-		$this->passwd="Benj1008";
+		$this->login="ALT18MOUSSAOUI";
+		$this->passwd="Samsam3400";
 		$this->base="videoppe3moreau";
-		
+
 		// ORDI DEV2
 		/*$this->hote = "localhost";
 		$this->port = "";
@@ -31,9 +31,9 @@ class accesBD
 		$this->passwd = "UgbNu74!";
 		$this->base = "videoppe3";*/
 		$this->connexion();
-		
+
 		}
-	
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------CONNECTION A LA BASE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -44,19 +44,19 @@ class accesBD
 			//echo "sqlsrv:server=$this->hote$this->port;Database=$this->base"." | ".$this->login." | ".$this->passwd;
 			// Pour SQL Server
 			$this->conn = new PDO("sqlsrv:server=$this->hote$this->port;Database=$this->base", $this->login, $this->passwd);
-			$this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
-            
+			$this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
             // Pour Mysql/MariaDB
             /*$this->conn = new PDO("mysql:dbname=$this->base;host=$this->hote",$this->login, $this->passwd);*/
             $this->boolConnexion = true;
         }
         catch(PDOException $e)
         {
-            die("Connection à la base de données échouée".$e->getMessage());
+            die("Connexion à la base de données échouée".$e->getMessage());
         }
 	}
-	
-	
+
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//----------------------------CHARGEMENT DES INFORMATIONS DE LA BASE--------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ class accesBD
 			{
 				$lesInfos[$nbTuples] = $row;
 				$nbTuples++;
-				
+
 			}
 		}
 		else
@@ -88,32 +88,76 @@ class accesBD
 		//retour du tableau à deux dimension
 		return $lesInfos;
 	}
-
-
+	public function verifActif($unLogin)
+	{
+		$actif = 0;
+		$requete = $this->conn->prepare("SELECT actif FROM CLIENT WHERE login = '".$unLogin."'");
+		$requete->bindValue(1,$unLogin);
+		$requete->execute();
+		$row = $requete->fetch(PDO::FETCH_NUM);
+		if ($row[0] == 0) {
+			$actif = 0;
+		} else {
+			$actif = 1;
+		}
+		return $actif;
+	}
+	public function modifPwd($login,$newPwd) {
+		$query = $this->conn->prepare("UPDATE CLIENT SET pwd = '".$newPwd."' WHERE login = '".$login."'");
+		$query->execute();
+		return $query;
+	}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION Client-------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public function insertClient($unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement,$unLoginClient,$unPwdClient)
 		{
 		//génération automatique de l'identifiant
-		$sonId = $this->donneProchainIdentifiant("client","idClient");
-		
-		$requete = $this->conn->prepare("INSERT INTO CLIENT (nomClient,prenomClient, emailClient, dateAbonnementClient,loginClient, pwdClient) VALUES (?,?,?,?,?,?)");
-		//définition de la requête SQL
-		$requete->bindValue(1,$unNomClient);
-		$requete->bindValue(2,$unPrenomClient);
-		$requete->bindValue(3,$unEmailClient);
-		$requete->bindValue(4,$uneDateAbonnement);
-		$requete->bindValue(5,$unLoginClient);
-		$requete->bindValue(6,$unPwdClient);
-		//exécution de la requête SQL
-		if(!$requete->execute())
-		{
-			die("Erreur dans insertClient : ".$requete->errorCode());
-		}
+		//$sonId = $this->donneProchainIdentifiant("client","idClient");
 
-		//retour de l'identifiant du nouveau tuple
-		return $sonId;
+		$requete = $this->conn->prepare("SELECT count(*) FROM CLIENT WHERE login = '".$unLoginClient."'");
+		$requete->bindValue(1,$unLoginClient);
+		$requete->execute();
+
+		$row = $requete->fetch(PDO::FETCH_NUM);
+
+		if ($row[0] == 0)
+		{
+			$sonId = $this->donneProchainIdentifiant("client","idClient");
+			$requete = $this->conn->prepare("SET IDENTITY_INSERT dbo.client ON INSERT INTO CLIENT (idClient,nomClient,prenomClient,emailClient,dateAbonnementClient,login,pwd,actif) VALUES (".$sonId.",?,?,?,?,?,?,0)");
+			//définition de la requête SQL
+			$requete->bindValue(1,$unNomClient);
+			$requete->bindValue(2,$unPrenomClient);
+			$requete->bindValue(3,$unEmailClient);
+			$requete->bindValue(4,$uneDateAbonnement);
+			$requete->bindValue(5,$unLoginClient);
+			$requete->bindValue(6,$unPwdClient);
+			//exécution de la requête SQL
+			if(!$requete->execute())
+			{
+				die("Erreur dans insertClient : ".$requete->errorCode());
+			}
+			//print_r($loginDispo);
+
+			//retour de l'identifiant du nouveau tuple
+			return $sonId;
+		}
+		else
+		{
+			echo "
+			</nav>
+			<div class='container h-50'>
+                    <div class='row h-10 justify-content-center align-items-center'>
+						<p class='head-table-connexion text-white'> Ce pseudo est déjà utilisé </p>
+					</div>
+					<div class='row h-10 justify-content-center align-items-center'>
+						<form>
+							<input class='btn btn-outline-danger mx-auto' type='button' value='Retour' onclick='history.back()'>
+						</form>
+					</div>
+			</div>
+				";
+		}
 		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION DES GENRES------------------------------------------------------------------------------------------------------------------------------------------------
@@ -122,7 +166,7 @@ class accesBD
 		{
 		//génération automatique de l'identifiant
 		$sonId = $this->donneProchainIdentifiant("genre","idGenre");
-		
+
 		//définition de la requête SQL
 		$requete = $this->conn->prepare("INSERT INTO genre (libelleGenre) VALUES (?)");
 		$requete->bindValue(1,$unLibelleGenre);
@@ -135,7 +179,7 @@ class accesBD
 
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
-		}	
+		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION des FILMS-------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -164,7 +208,7 @@ class accesBD
 		}
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
-		}	
+		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION des SERIES-------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -193,7 +237,7 @@ class accesBD
 		}
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
-		}	
+		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION d'une Saison ------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -216,7 +260,7 @@ class accesBD
 
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
-		}	
+		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION d'un épisode ------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -240,8 +284,8 @@ class accesBD
 
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
-		}	
-			
+		}
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//---------------------------CREATION DE LA REQUETE D'INSERTION d'emprunt ------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -254,7 +298,7 @@ class accesBD
 		$requete->bindValue(1,$uneDateEmprunt);
 		$requete->bindValue(2,$unIdClient);
 		$requete->bindValue(3,$unIdSupport);
-		
+
 		//exécution de la requête SQL
 		if(!$requete->execute())
 		{
@@ -264,7 +308,7 @@ class accesBD
 		//retour de l'identifiant du nouveau tuple
 		return $sonId;
 		}
-		
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------EXECUTION D'UNE REQUETE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -287,13 +331,13 @@ class accesBD
 			case 'SERIE':
 				$stringQuery.='SERIE';
 				break;
-			case 'SAISON':	
+			case 'SAISON':
 				$stringQuery.='SAISON';
 				break;
-			case 'EPISODE':	
+			case 'EPISODE':
 				$stringQuery.='EPISODE';
 				break;
-			case 'EMPRUNT':	
+			case 'EMPRUNT':
 				$stringQuery.='EMPRUNT';
 				break;
 			default:
@@ -303,8 +347,8 @@ class accesBD
 
 			return $stringQuery.";";
 		}
-	
-	
+
+
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------DONNE LE PROCHAIN INDENTIFIANT---------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -313,7 +357,7 @@ class accesBD
 		//$prochainId[0]=0;
 		//définition de la requête SQL
 		$stringQuery = $this->specialCase("SELECT * FROM ",$uneTable);
-		echo $stringQuery;
+		//echo $stringQuery;
 		$requete = $this->conn->prepare($stringQuery);
 		$requete->bindValue(1,$unIdentifiant);
 
@@ -362,7 +406,7 @@ class accesBD
 		{
 			die('Erreur sur donneProchainIdentifiantSaison : '+$requete->errorCode());
 		}
-		}	
+		}
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------DONNE LE PROCHAIN INDENTIFIANT D'UNE SAISON---------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -391,7 +435,7 @@ class accesBD
 		{
 			die('Erreur sur donneProchainIdentifiantEpisode : '+$requete->errorCode());
 		}
-		}	
+		}
 	}
 
 ?>

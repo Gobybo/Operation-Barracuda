@@ -107,6 +107,10 @@ Class conteneurClient
 			}
 		return $trouve;
 	}
+	public function verifClientActif($unLogin) {
+		$actif = 0;
+	}
+		
 	}
 	
 ?> 

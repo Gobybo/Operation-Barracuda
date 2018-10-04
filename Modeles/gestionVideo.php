@@ -21,7 +21,7 @@ Class gestionVideo
 	private $toutesLesSaisons;
 	private $toutesLesSeries;
 	private $maBD;
-	
+
 	//CONSTRUCTEUR--------------------------------------------------------------------------------------------------------------------------------
 	public function __construct()
 		{
@@ -33,10 +33,10 @@ Class gestionVideo
 		$this->toutesLesSaisons = new conteneurSaison();
 		$this->tousLesEpisodes = new conteneurEpisode();
 		$this->tousLesEmprunts = new conteneurEmprunt();
-		
+
 		$this->maBD = new accesBD();
-		
-		$this->chargeLesClients();	
+
+		$this->chargeLesClients();
 		$this->chargeLesGenres();
 		$this->chargeLesSupports();
 		$this->chargeLesFilms();
@@ -44,10 +44,10 @@ Class gestionVideo
 		$this->chargeLesSaisons();
 		$this->chargeLesEpisodes();
 		$this->chargeLesEmprunts();
-	
+
 		}
-	
-		
+
+
 	//METHODE CHARGEANT TOUTES LES Clients--------------------------------------------------------------------------------------
 	private function chargeLesClients()
 	{
@@ -58,7 +58,7 @@ Class gestionVideo
 			//instanciation du client et ajout de celui-ci dans la collection
 			$this->tousLesClients->ajouteUnClient($resultat[$nb][0],$resultat[$nb][1],$resultat[$nb][2],$resultat[$nb][3],$resultat[$nb][4],$resultat[$nb][5],$resultat[$nb][6]);
 			$nb++;
-			
+
 			}
 	}
 	//METHODE CHARGEANT TOUS LES GENRES-----------------------------------------------------------------------------------
@@ -66,14 +66,14 @@ Class gestionVideo
 		{
 		$resultat=$this->maBD->chargement('genre');
 		$nb=0;
-	
+
 		while ($nb<sizeof($resultat))
 			{
 				$this->tousLesGenres->ajouteUnGenre($resultat[$nb][0],$resultat[$nb][1]);
-				
+
 			$nb++;
 			}
-			
+
 		}
 	//METHODE CHARGEANT TOUS LES Supports-----------------------------------------------------------------------------------
 	private function chargeLesSupports()
@@ -84,10 +84,10 @@ Class gestionVideo
 			{
 				$leGenre = $this->tousLesGenres->donneObjetGenreDepuisNumero($resultat[$nb][4]);
 				$this->tousLesSupports->ajouteUnSupport($resultat[$nb][0],$resultat[$nb][1],$resultat[$nb][2],$resultat[$nb][3],$leGenre);
-				
+
 			$nb++;
 			}
-			
+
 		}
 		//METHODE CHARGEANT TOUS LES FILMS-----------------------------------------------------------------------------------
 	private function chargeLesFilms()
@@ -102,9 +102,9 @@ Class gestionVideo
 				$this->tousLesFilms->ajouteUnFilm($resultat[$nb][0],$leSupport->getTitreSupport(),$leSupport->getRealisateurSupport(),$leSupport->getImageSupport(),$leGenre,$resultat[$nb][1]);
 			$nb++;
 			}
-		
+
 		}
-	
+
 //METHODE CHARGEANT TOUTES LES SERIES-----------------------------------------------------------------------------------
 	private function chargeLesSeries()
 		{
@@ -117,20 +117,20 @@ Class gestionVideo
 				$this->toutesLesSeries->ajouteUneSerie($resultat[$nb][0],$leSupport->getTitreSupport(),$leSupport->getRealisateurSupport(),$leSupport->getImageSupport(),$leGenre,$resultat[$nb][1]);
 			$nb++;
 			}
-			
-		}	
+
+		}
 //METHODE CHARGEANT TOUTES LES SAISONS-----------------------------------------------------------------------------------
 	private function chargeLesSaisons()
 		{
 		$resultat=$this->maBD->chargement('Saison');
 		$nb=0;
-	
+
 		while ($nb<sizeof($resultat))
 			{   $laSerie = $this->toutesLesSeries->donneObjetSerieDepuisNumeroSerie($resultat[$nb][0]);
 				$this->toutesLesSaisons->ajouteUneSaison($resultat[$nb][1],$resultat[$nb][2],$resultat[$nb][3],$laSerie);
 			$nb++;
 			}
-			
+
 		}
 		//METHODE CHARGEANT TOUTES LES EPISODES-----------------------------------------------------------------------------------
 	private function chargeLesEpisodes()
@@ -143,7 +143,7 @@ Class gestionVideo
 			$this->tousLesEpisodes->ajouteUnEpisode($resultat[$nb][2],$resultat[$nb][3],$resultat[$nb][4],$laSaison);
 			$nb++;
 			}
-			
+
 		}
 	//METHODE CHARGEANT TOUS LES EMPRUNTS -----------------------------------------------------------------------------------
 	private function chargeLesEmprunts()
@@ -158,26 +158,30 @@ Class gestionVideo
 				$this->tousLesEmprunts->mettreUnEmpruntEnPlus($resultat[$nb][0], $resultat[$nb][1],$unClient,$leSupport);
 			    $nb++;
 			}
-			
+
 		}
 //METHODE QUI VERIF LE LOGIN ET LE PASSWORD DE L UTILISATEUR
 	public function verifLogin($unLogin, $unPassword)
 	{
 		$resultat=$this->tousLesClients->verificationExistanceClient($unLogin, $unPassword);
 		return $resultat;
-	}			
-		
+	}
+	public function modifPwd($login, $newPwd)
+	{
+		$resultat=$this->maBD->modifPwd($login,$newPwd);
+		return $resultat;
+	}
 
 
 
 
 //METHODE INSERANT UN CLIENT----------------------------------------------------------------------------------------------------------
-	public function ajouteUnClient($unIdClient, $unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement)
+	public function ajouteUnClient($unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement,$unLoginClient,$unPwdClient)
 		{
 		//insertion du client dans la base de données
-		$sonNumero = $this->maBD->insertClient($unIdClient, $unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement);
+		$sonNumero = $this->maBD->insertClient($unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement,$unLoginClient,$unPwdClient);
 		//instanciation du client et ajout de celui-ci dans la collection
-		$this->tousLesClients->ajouteUnClient($unIdClient, $unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement);
+		$this->tousLesClients->ajouteUnClient($unNomClient, $unPrenomClient, $unEmailClient, $uneDateAbonnement,$unLoginClient,$unPwdClient,0);
 		}
 	//METHODE INSERANT UN FILM----------------------------------------------------------------------------------------------------------
 	public function ajouteUnFilm($unIdFilm,$unTitreFilm, $unRealisateurFilm, $unIdGenre,$uneDureeFilm)
@@ -217,14 +221,14 @@ Class gestionVideo
 		$laSerie = $laSerie->donneObjetSerieDepuisNumero($unIdSerie);
 		//instanciation de la saison et ajout de celle-ci dans la collection
 		$this->toutesLesSaisons->ajouteUneSaison($unIdSaison,$uneAnneeSaison, $unNbrEpisodeSaison, $laSerie);
-		}	
-		
+		}
+
     //METHODE INSERANT UN EMPRUNT--------------------------------------------------------------------------------------------------------
 	public function ajouteUnEmprunt($uneDateEmprunt, $unIdClient, $unIdSupport)
 		{
 		//insertion de l'emprunt  dans la base de données
 		$sonCode=$this->maBD->insertEmprunt($uneDateEmprunt, $unIdClient, $unIdSupport);
-		
+
 		//instanciation de l'emprunt et ajout de celui-ci dans la collection
 		$leClient = null;
 		$leClient = $leClient->donneObjetClientDepuisNumero($unIdClient);
@@ -232,20 +236,20 @@ Class gestionVideo
 		$leSupport = null;
 		$leSupport = $leSupport->donneObjetSupportDepuisNumero($unIdSupport);
 		$this->tousLesEmprunts->ajouteUnEmprunt($sonCode, $uneDateEmprunt,$leClient,$leSupport);
-		}	
+		}
 	//METHODE INSERANT UN EPISODE --------------------------------------------------------------------------------------------------------
 	public function ajouteUnEpisode($unIdSerie, $unNumSaison, $unTitreEpisode, $uneDuree)
 		{
 		//insertion d'un episode  dans la base de données
 		$sonCode=$this->maBD->insertEpisode($unIdSerie, $unNumSaison, $unTitreEpisode, $uneDuree);
-		
+
 		//instanciation de l'épisode et ajout de celui-ci dans la collection
 		$leGenre = null;
 		$laSerie = null;
 		$laSaison = null;
 		$laSaison = $laSaison->donneObjetSaisonDepuisNumero($unIdSerie,$unNumSaison);
 		$this->tousLesEpisodes->ajouteUnEpisode($sonCode,$unTitreEpisode,$uneDureeEpisode, $laSaison);
-		}	
+		}
 	//METHODE RETOURNANT LE NOMBRE DE CLIENT------------------------------------------------------------------------------------------------
 	public function donneNbClients()
 		{
@@ -260,7 +264,7 @@ Class gestionVideo
 	public function donneNbSeries()
 		{
 		return $this->toutesLesSeries->nbSeries();
-		}		
+		}
 	public function donneNbGenres()
 		{
 		return $this->tousLesGenres->nbGenres();
@@ -268,7 +272,7 @@ Class gestionVideo
 	public function donneNbSaisons()
 		{
 		return $this->toutesLesSaisons->nbSaisons();
-		}		
+		}
 	public function donneNbEmprunts()
 		{
 		return $this->tousLesEmprunts->nbEmprunts();
@@ -305,8 +309,8 @@ Class gestionVideo
 	public function listeLesEpisodes()
 		{
 		return $this->tousLesEpisodes->listeDesEpisodes();
-		}		
-			
+		}
+
 	//METHODE RETOURNANT LA LISTE DES DIFFERENTS ELEMENTS DANS DES BALISES <SELECT>-----------------------------------------------------------------
 	public function lesClientsAuFormatHTML()
 		{
@@ -315,29 +319,29 @@ Class gestionVideo
 	public function lesFilmsAuFormatHTML()
 		{
 		return $this->tousLesFilms->lesFilmsAuFormatHTML();
-		}	
+		}
 	public function lesSeriesAuFormatHTML()
 		{
 		return $this->toutesLesSeries->lesSeriesAuFormatHTML();
-		}	
+		}
 	public function lesGenresAuFormatHTML()
 		{
 		return $this->tousLesGenres->lesGenresAuFormatHTML();
-		}	
+		}
 	public function lesSaisonsAuFormatHTML()
 		{
 		return $this->toutesLesSaisons->lesSaisonsAuFormatHTML();
-		}	
+		}
 	public function lesEmpruntsAuFormatHTML()
 		{
 		return $this->tousLesEmprunts->lesEmpruntsAuFormatHTML();
-		}	
+		}
 	public function lesEpisodesAuFormatHTML()
 		{
 		return $this->tousLesEpisodes->lesEpisodesAuFormatHTML();
-		}		
+		}
 
-		
+
 	}
-	
+
 ?>
